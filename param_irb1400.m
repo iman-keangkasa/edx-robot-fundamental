@@ -1,8 +1,9 @@
 syms rot1 rot2 rot3 rot4 rot5 rot6;
 
 %the dh parameters are 
-%[a_	,alpha_	,theta_	,d_		] 
-%[xtrans,xrot	,zrot	,z		]
+%[alpha	,a	,theta	,d		] 
+
+%[x_rot,x_trans,z_rot,z_trans]
 
 irb1400_dh = [ ...
 
