@@ -6,27 +6,27 @@ function [ pos_ ] = fkine_numerical(theta1,theta2,theta3,theta4,theta5,g)
 	e=1.125;
 	pos = zeros(10,3);
 	pos0 = [ 0; 0; 0; 1 ];
-
-	T0 = compute_dh_matrix(0,0,0,theta1);
-	T1 = compute_dh_matrix(a,-pi/2,0,theta2);
-	T2 = compute_dh_matrix(b,0,0,theta3);
-	T3 = compute_dh_matrix(c,0,0,theta4);
-	T4 = compute_dh_matrix(0,-pi/2,0,theta5);
-	T5 = compute_dh_matrix(d,0,0,0);
+%function A = compute_dh_matrix( r--x, alpha--x, d--z, theta--z )
+	T0_1 = compute_dh_matrix( 0,-pi/2,a,theta1 );
+	T1_2 = compute_dh_matrix( b,0,0,theta2-(pi/2) );
+	T2_3 = compute_dh_matrix( c,0,0,theta3+(pi/2) );
+	T3_4 = compute_dh_matrix( 0,-pi/2,0,theta4-(pi/2) );
+	T4_5 = compute_dh_matrix(0,0,d,theta5);
+	
 
 	
-	A1=T0*T1;
-	A2=T0*T1*T2;
-	A3=T0*T1*T2*T3;
-	A4=T0*T1*T2*T3*T4;
-	A5=T0*T1*T2*T3*T4*T5;
+	A1=T0_1;
+	A2=T0_1*T1_2;
+	A3=T0_1*T1_2*T2_3;
+	A_5=T0_1*T1_2*T2_3*T3_4; %just a rotation about x_3
+	A5=A_5*T4_5;
 
 	pos(1,:) = pos0(1:3)';
 	
 	pos2 = (A1*pos0);
 	pos3 = (A2*pos0);
 	pos4 = (A3*pos0);
-	pos5 = (A4*pos0);
+	pos5 = (A5*pos0);
 	pos_hand = (A5*pos0);
 	prepos6 = [ 0 0 -e ];
 	prepos7 = [g/2 0 -e];
